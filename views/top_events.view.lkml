@@ -8,7 +8,7 @@ view: top_events {
   }
   measure: avg_session_duration {
     type: average
-    sql: ${TABLE}.avg_session_duration ;;
+    sql: ${TABLE}.avg_session_duration / 86400 ;;
     value_format_name: hour_format
   }
   dimension_group: date {
@@ -41,9 +41,9 @@ view: top_events {
     type: sum
     sql: ${TABLE}.event_value ;;
   }
-  measure: %_New_Sessions {
+  measure: New_Sessions {
     type: average
-    sql: ${TABLE}.percent_new_sessions ;;
+    sql: ${TABLE}.percent_new_sessions /100;;
     value_format_name: percent_2
   }
 
