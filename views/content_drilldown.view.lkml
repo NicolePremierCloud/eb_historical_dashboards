@@ -38,17 +38,24 @@ view: content_drilldown {
     type: string
     sql: ${TABLE}.page_path ;;
   }
+  set: page_drills{
+    fields: [page_path_level_2, page_path_level_3, page_path_level_4]
+  }
+
   dimension: page_path_level_1 {
     type: string
     sql: ${TABLE}.page_path_level_1 ;;
+    drill_fields: [page_drills*]
   }
   dimension: page_path_level_2 {
     type: string
     sql: ${TABLE}.page_path_level_2 ;;
+    drill_fields: [page_path_level_3]
   }
   dimension: page_path_level_3 {
     type: string
     sql: ${TABLE}.page_path_level_3 ;;
+    drill_fields: [page_path_level_4]
   }
   dimension: page_path_level_4 {
     type: string
