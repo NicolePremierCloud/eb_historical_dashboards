@@ -29,18 +29,18 @@ view: landing_pages {
     datatype: date
     sql: ${TABLE}.date ;;
   }
-  dimension: goal_completions_all {
-    type: number
+  measure: goal_completions_all {
+    type: average
     sql: ${TABLE}.goal_completions_all /100;;
     value_format_name: percent_2
   }
-  dimension: goal_conversion_rate_all {
-    type: number
+  measure: goal_conversion_rate_all {
+    type: average
     sql: ${TABLE}.goal_conversion_rate_all /100;;
     value_format_name: percent_2
   }
-  dimension: goal_value_all {
-    type: number
+  measure: goal_value_all {
+    type: average
     sql: ${TABLE}.goal_value_all/100;;
     value_format_name: percent_2
   }
