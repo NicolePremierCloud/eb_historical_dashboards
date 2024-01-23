@@ -20,5 +20,8 @@ named_value_format: format_page_value {
 
 explore: all_pages {}
 explore: top_events {}
+explore: exit_pages {}
+explore: landing_pages {}
+explore: content_drilldown {}
 
 persist_with: eb_historical_dashboards_default_datagroup
