@@ -28,9 +28,11 @@ view: content_drilldown {
     datatype: date
     sql: ${TABLE}.date ;;
   }
-  dimension: exit_rate {
-    type: number
-    sql: ${TABLE}.exit_rate ;;
+
+  measure: exit_rate {
+    type: average
+    sql: ${TABLE}.exit_rate/100 ;;
+    value_format_name: percent_2
   }
   dimension: page_path {
     type: string
