@@ -10,14 +10,18 @@ view: landing_pages {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}._fivetran_synced ;;
   }
-  dimension: avg_session_duration {
-    type: number
-    sql: ${TABLE}.avg_session_duration ;;
+  measure: avg_session_duration {
+    type: average
+    sql: ${TABLE}.avg_session_duration / 86400 ;;
+    value_format_name: hour_format
   }
-  dimension: bounce_rate {
-    type: number
-    sql: ${TABLE}.bounce_rate ;;
+
+  measure: bounce_rate {
+    type: average
+    sql: ${TABLE}.bounce_rate /100;;
+    value_format_name: percent_2
   }
+
   dimension_group: date {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -27,31 +31,35 @@ view: landing_pages {
   }
   dimension: goal_completions_all {
     type: number
-    sql: ${TABLE}.goal_completions_all ;;
+    sql: ${TABLE}.goal_completions_all /100;;
+    value_format_name: percent_2
   }
   dimension: goal_conversion_rate_all {
     type: number
-    sql: ${TABLE}.goal_conversion_rate_all ;;
+    sql: ${TABLE}.goal_conversion_rate_all /100;;
+    value_format_name: percent_2
   }
   dimension: goal_value_all {
     type: number
-    sql: ${TABLE}.goal_value_all ;;
+    sql: ${TABLE}.goal_value_all/100;;
+    value_format_name: percent_2
   }
   dimension: landing_page_path {
     type: string
     sql: ${TABLE}.landing_page_path ;;
   }
-  dimension: new_users {
-    type: number
+  measure: new_users {
+    type: sum
     sql: ${TABLE}.new_users ;;
   }
-  dimension: pageviews_per_session {
-    type: number
-    sql: ${TABLE}.pageviews_per_session ;;
+  measure: pageviews_per_session {
+    type: average
+    sql: ${TABLE}.pageviews_per_session;;
   }
-  dimension: percent_new_sessions {
-    type: number
-    sql: ${TABLE}.percent_new_sessions ;;
+  measure: percent_new_sessions {
+    type: average
+    sql: ${TABLE}.percent_new_sessions/100;;
+    value_format_name: percent_2
   }
   dimension: profile {
     type: string
@@ -61,8 +69,8 @@ view: landing_pages {
     type: string
     sql: ${TABLE}.segment ;;
   }
-  dimension: sessions {
-    type: number
+  measure: sessions {
+    type: sum
     sql: ${TABLE}.sessions ;;
   }
   measure: count {
