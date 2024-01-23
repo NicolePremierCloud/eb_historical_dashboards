@@ -17,20 +17,21 @@ view: exit_pages {
     datatype: date
     sql: ${TABLE}.date ;;
   }
-  dimension: exit_rate {
-    type: number
-    sql: ${TABLE}.exit_rate ;;
+  measure: exit_rate {
+    type: average
+    sql: ${TABLE}.exit_rate/100;;
+    value_format_name: percent_2
   }
-  dimension: exits {
-    type: number
+  measure: exits {
+    type: sum
     sql: ${TABLE}.exits ;;
   }
   dimension: page_path {
     type: string
     sql: ${TABLE}.page_path ;;
   }
-  dimension: pageviews {
-    type: number
+  measure: pageviews {
+    type: sum
     sql: ${TABLE}.pageviews ;;
   }
   dimension: profile {
