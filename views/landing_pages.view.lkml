@@ -30,9 +30,9 @@ view: landing_pages {
     sql: ${TABLE}.date ;;
   }
   measure: goal_completions_all {
-    type: average
-    sql: ${TABLE}.goal_completions_all /100;;
-    value_format_name: percent_2
+    type: sum
+    sql: ${TABLE}.goal_completions_all;;
+
   }
   measure: goal_conversion_rate_all {
     type: average
@@ -40,9 +40,8 @@ view: landing_pages {
     value_format_name: percent_2
   }
   measure: goal_value_all {
-    type: average
-    sql: ${TABLE}.goal_value_all/100;;
-    value_format_name: percent_2
+    type: sum
+    sql: ${TABLE}.goal_value_all;;
   }
   dimension: landing_page_path {
     type: string
