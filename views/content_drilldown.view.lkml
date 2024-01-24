@@ -1,21 +1,10 @@
 view: content_drilldown {
-  sql_table_name: `eb-seo.google_analytics_custom.content_drilldown` ;;
-
-  dimension: _fivetran_id {
-    type: string
-    sql: ${TABLE}._fivetran_id ;;
-  }
-  dimension_group: _fivetran_synced {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}._fivetran_synced ;;
-  }
+  sql_table_name: `eb-seo.google_analytics_custom.all_pages` ;;
   measure: avg_time_on_page {
     type: average
     sql: ${TABLE}.avg_time_on_page / 86400 ;;
     value_format_name: hour_format
   }
-
   measure: bounce_rate {
     type: average
     sql: ${TABLE}.bounce_rate /100;;
@@ -38,29 +27,32 @@ view: content_drilldown {
     type: string
     sql: ${TABLE}.page_path ;;
   }
+
   set: page_drills{
-    fields: [page_path_level_2, page_path_level_3, page_path_level_4]
+    fields: [page_path_level_2, page_path_level_3, page_path_level_4, page_path]
   }
 
   dimension: page_path_level_1 {
     type: string
-    sql: ${TABLE}.page_path_level_1 ;;
+    sql: CONCAT('/', ARRAY(SELECT x FROM UNNEST(SPLIT(${TABLE}.page_path, '/')) AS x)[SAFE_OFFSET(1)], IF(ARRAY_LENGTH(SPLIT(${TABLE}.page_path, '/')) > 2, '/', '')) ;;
     drill_fields: [page_drills*]
   }
   dimension: page_path_level_2 {
     type: string
-    sql: ${TABLE}.page_path_level_2 ;;
+    sql: CONCAT('/', ARRAY(SELECT x FROM UNNEST(SPLIT(${TABLE}.page_path, '/')) AS x)[SAFE_OFFSET(2)], IF(ARRAY_LENGTH(SPLIT(${TABLE}.page_path, '/')) > 3, '/', '')) ;;
     drill_fields: [page_path_level_3]
   }
   dimension: page_path_level_3 {
     type: string
-    sql: ${TABLE}.page_path_level_3 ;;
+    sql: CONCAT('/', ARRAY(SELECT x FROM UNNEST(SPLIT(${TABLE}.page_path, '/')) AS x)[SAFE_OFFSET(3)], IF(ARRAY_LENGTH(SPLIT(${TABLE}.page_path, '/')) > 4, '/', '')) ;;
     drill_fields: [page_path_level_4]
   }
   dimension: page_path_level_4 {
     type: string
-    sql: ${TABLE}.page_path_level_4 ;;
+    sql: CONCAT('/', ARRAY(SELECT x FROM UNNEST(SPLIT(${TABLE}.page_path, '/')) AS x)[SAFE_OFFSET(4)], IF(ARRAY_LENGTH(SPLIT(${TABLE}.page_path, '/')) > 4, '/', '')) ;;
+    drill_fields: [page_path]
   }
+
   measure: pageviews {
     type: sum
     sql: ${TABLE}.pageviews ;;
@@ -68,10 +60,6 @@ view: content_drilldown {
   measure: unique_pageviews {
     type: sum
     sql: ${TABLE}.unique_pageviews ;;
-  }
-  dimension: profile {
-    type: string
-    sql: ${TABLE}.profile ;;
   }
   measure: count {
     type: count
