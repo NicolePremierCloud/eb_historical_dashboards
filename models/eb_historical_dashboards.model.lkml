@@ -1,5 +1,6 @@
 connection: "eb_historical_dashboards"
 include: "/*/*.view.lkml"
+include:"/comparision.view.lkml"
 datagroup: eb_historical_dashboards_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
@@ -23,5 +24,7 @@ explore: top_events {}
 explore: exit_pages {}
 explore: landing_pages {}
 explore: content_drilldown {}
+
+explore: comparision {}
 
 persist_with: eb_historical_dashboards_default_datagroup
