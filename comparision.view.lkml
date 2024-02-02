@@ -2,7 +2,7 @@ view: comparision {
   sql_table_name: `eb-seo.google_analytics_custom.all_pages` ;;
 
   dimension: pageviews {
-    primary_key: yes
+    primary_key: no
     hidden: yes
     type: number
     sql: ${TABLE}.pageviews ;;
@@ -37,6 +37,7 @@ view: comparision {
     type: count
     hidden: yes
   }
+
   measure: count_pageviews {
     label: "Count of orders"
     type: count_distinct
